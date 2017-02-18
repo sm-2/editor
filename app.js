@@ -50,7 +50,32 @@
 
             }
 
+        })
+        .controller('EditorEquiposController', function ($scope, $window) {
+
+            var ctrl = this;
+
+            var original = {
+                
+            };
+
+            ctrl.model = angular.copy(original);
+
+            ctrl.list = [];
+
+
+            ctrl.generate = function() {
+
+                var blob = new Blob([JSON.stringify(ctrl.list)], { type: 'text/json;charset=utf-8' }),
+                    url = $window.URL || $window.webkitURL;
+
+                $scope.fileUrl = url.createObjectURL(blob);
+
+            }
+
         });
+
+
     
 
 })();

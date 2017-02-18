@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>E-Sports Calendar Editor</title>
+    <link rel="icon" href="img/beta_icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles/bootstrap.min.css">
+    <script src="jquery-3.1.1.min.js"></script>
+    <script src="bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
+    <script src="app.js"></script>
+
+    <script type="text/javascript" src="node_modules/moment/moment.js"></script>
+    <script type="text/javascript" src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+    <script type="text/javascript" src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
+</head>
+<body ng-app="esportscalendar">
+
+<nav class="navbar navbar-default ">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="img/beta_icon.png" width="20px" height="20px">
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Competicion <span class="sr-only">(current)</span></a></li>
+                <li><a href="partidos.html">Partidos</a></li>
+                <li lass="active"><a href="equipos.html">Equipos</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div>
+</nav>
+
+<div class="container"  ng-controller="EditorEquiposController as editor">
+    <h1>Equipos</h1>
+    {{editor.model}}
+    <div class="row">
+     <div class="col-md-6">
+         <form>
+            <div class="form-group">
+              <label for="nombreEquipo">Nombre Equipo:</label>
+              <input type="text" class="form-control" id="nombreEquipo" ng-model="editor.model.name">
+            </div>
+
+             <div class="form-group">
+              <label for="descripcionEquipo">Descripcion del equipo:</label>
+              <input type="text" class="form-control" id="descripcionEquipo" ng-model="editor.model.descripcion">
+            </div>
+
+            <div class="controls" id="profs"> 
+                <form class="input-append">
+                    <div id="field">
+                    <label>Redes Sociales: (Presiona + para añadir una red social)</label>
+                    <select class="form-control" id="sel1" style="margin-bottom: 10px">
+                        <option>Twitter</option>
+                        <option>Facebook</option>
+                        <option>Youtube</option>
+                        <option>Twitch</option>
+                    </select>
+                    <input autocomplete="off" class="input form-control" id="field1" name="prof1" type="text" placeholder="Introduce la red social" data-items="8"/>
+
+                    <button id="b1" class="btn add-more" type="button" style="margin: 10px">+</button></div>
+                </form>
+                <br>
+
+                <script type="text/javascript">
+                    
+                    $(document).ready(function(){
+                            var next = 1;
+                            $(".add-more").click(function(e){
+                                e.preventDefault();
+                                var addto = "#field" + next;
+                                var addRemove = "#field" + (next);
+                                next = next + 1;
+
+                                var newSelect = '<select class="form-control" id="sel'+ next + '" style="margin-bottom: 10px"> <option>Twitter</option><option>Twitter</option><option>Facebook</option><option>Youtube</option><option>Twitch</option></select>';
+
+                                var newIn = '<input autocomplete="off" class="input form-control" id="field' + next + '" name="field' + next + '" type="text"  placeholder="Introduce la red social">';
+
+                                var newInput = $(newIn);
+                                var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" style="margin: 10px" >-</button></div><div id="field">';
+                                var removeButton = $(removeBtn);
+
+                                $(addto).after(newInput);
+                                $(addto).after(newSelect);
+                                $(addRemove).after(removeButton);
+
+                                $("#field" + next).attr('data-source',$(addto).attr('data-source'));
+                                $("#count").val(next);  
+                                
+                                    $('.remove-me').click(function(e){
+                                        e.preventDefault();
+                                        var fieldNum = this.id.charAt(this.id.length-1);
+                                        var fieldID = "#field" + fieldNum;
+                                        var selectID = "#sel" + fieldNum;
+                                        $(this).remove();
+                                        $(fieldID).remove();
+                                        $(selectID).remove();
+                                    });
+                            });
+                    });
+                </script>
+            </div>
+
+               <div class="controls" id="profs"> 
+                <form class="input-append">
+                    <div id="field">
+                    <label>Roster: (Presiona + para añadir un nuevo jugador)</label>
+
+                    <input autocomplete="off" class="input form-control" id="selp1" name="position1" type="text" placeholder="Introduce la posicion del jugador" data-items="8" style="margin-bottom: 10px"/>
+
+                    <input autocomplete="off" class="input form-control" id="fieldp1" name="prof1" type="text" placeholder="Introduce el nombre del jugador" data-items="8"/>
+
+                    <button id="b1" class="btn add-more-players" type="button" style="margin: 10px">+</button></div>
+                </form>
+                <br>
+
+                <script type="text/javascript">
+                    
+                    $(document).ready(function(){
+                            var next = 1;
+                            $(".add-more-players").click(function(e){
+                                e.preventDefault();
+                                var addto = "#fieldp" + next;
+                                var addRemove = "#fieldp" + (next);
+                                next = next + 1;
+
+                                var newSelect = '<input autocomplete="off" class="input form-control" id="selp'+ next + '" style="margin-bottom: 10px" name="position1" type="text" placeholder="Introduce la posicion del jugador" data-items="8"/>';
+
+                                var newIn = '<input autocomplete="off" class="input form-control" id="fieldp' + next + '" name="field' + next + '" type="text" placeholder="Introduce el nombre del jugador">';
+
+                                var newInput = $(newIn);
+                                var removeBtn = '<button id="remove' + (next - 1) + '" class="btn btn-danger remove-me" style="margin: 10px" >-</button></div><div id="field">';
+                                var removeButton = $(removeBtn);
+
+                                $(addto).after(newInput);
+                                $(addto).after(newSelect);
+                                $(addRemove).after(removeButton);
+
+                                $("#fieldp" + next).attr('data-source',$(addto).attr('data-source'));
+                                $("#countp").val(next);  
+                                
+                                    $('.remove-me').click(function(e){
+                                        e.preventDefault();
+                                        var fieldNum = this.id.charAt(this.id.length-1);
+                                        var fieldID = "#fieldp" + fieldNum;
+                                        var selectID = "#selp" + fieldNum;
+                                        $(this).remove();
+                                        $(fieldID).remove();
+                                        $(selectID).remove();
+                                    });
+                            });
+                    });
+                </script>
+            </div>
+            
+          <a ng-click="editor.generate()" ng-href="{{fileUrl}}" download="competition.json"  class="btn btn-default">Descargar</a>
+      </form>
+    </div>
+</div>
+</div>
+</body>
+</html>
