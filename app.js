@@ -36,7 +36,6 @@
 
             ctrl.add = function () {
 
-                ctrl.model.date = $window.matchdate;
                 ctrl.list.push(angular.copy(ctrl.model));
                 ctrl.model = angular.copy(original);
 
