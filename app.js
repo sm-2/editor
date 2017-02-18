@@ -1,53 +1,26 @@
 (function () {
-'use script';
+    
+    'use script';
 
-angular.module('ShoppingListCheckOff',[])
-.controller('ToBuyController',ToBuyController)
-.controller('AlreadyBougthController',AlreadyBougthController)
-.service('ShoppingListCheckOffService',ShoppingListCheckOffService);
+    angular.module('esportscalendar', [])
+        .config(['$compileProvider', function ($compileProvider) {
+            $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
+        }])
 
-ToBuyController.$inject = ['ShoppingListCheckOffService'];
-function ToBuyController(ShoppingListCheckOffService){
-  var toBuy = this;
+        .controller('EditorController', function ($scope, $window) {
 
-  toBuy.itemsToBuy = ShoppingListCheckOffService.getToBuyItems();
+            var ctrl = this;
 
-  toBuy.buyItems = function (itemIndex) {
-    ShoppingListCheckOffService.buyItems(itemIndex);
-  };
+            ctrl.model = {};
 
-}
+            var data = {a:1,b:2},
+                blob = new Blob([JSON.stringify(data)], { type: 'text/json;charset=utf-8' }),
+                url = $window.URL || $window.webkitURL;
 
-AlreadyBougthController.$inject=['ShoppingListCheckOffService'];
-function AlreadyBougthController(ShoppingListCheckOffService){
-  var alreadyBougth = this;
+            $scope.fileUrl = url.createObjectURL(blob);
 
-  alreadyBougth.itemsBougth = ShoppingListCheckOffService.getAlreadyBougthItems();
+        });
 
-}
-
-function ShoppingListCheckOffService() {
-  var service = this;
-
-  var toBuy =[{ name: "cookies", quantity: 10 },{ name: "tomatoes", quantity: 6 },
-      { name: "potatoes", quantity: 5 },{ name: "chips", quantity: 1 },
-      { name: "fish", quantity: 2 },{ name: "carrot", quantity: 2 }];
-
-  var alreadyBougth = [];
-
-  service.getToBuyItems = function () {
-    return toBuy;
-  };
-
-  service.getAlreadyBougthItems = function (){
-    return alreadyBougth;
-  };
-
-  service.buyItems = function (itemIndex) {
-    var item = toBuy.splice(itemIndex,1);
-    alreadyBougth.push(item[0]);
-  };
-
-}
+    
 
 })();
