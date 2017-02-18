@@ -6,21 +6,21 @@
         .config(['$compileProvider', function ($compileProvider) {
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
         }])
-
-        .controller('EditorController', function ($scope, $window) {
+        .controller('EditorCompeticionController', function ($scope, $window) {
 
             var ctrl = this;
 
             ctrl.model = {};
+            ctrl.generate = function() {
 
-            var data = {a:1,b:2},
-                blob = new Blob([JSON.stringify(data)], { type: 'text/json;charset=utf-8' }),
-                url = $window.URL || $window.webkitURL;
+                var blob = new Blob([JSON.stringify(ctrl.model)], { type: 'text/json;charset=utf-8' }),
+                    url = $window.URL || $window.webkitURL;
 
-            $scope.fileUrl = url.createObjectURL(blob);
+                $scope.fileUrl = url.createObjectURL(blob);
+
+            }
 
         });
-
     
 
 })();

@@ -34,7 +34,7 @@
 
   <div class="row">
 
-    <div class="col-md-6" ng-controller ='EditorController as editor'>
+    <div class="col-md-6" ng-controller ='EditorCompeticionController as editor'>
         {{editor.model}}
          <form>
             <div class="form-group">
@@ -53,7 +53,7 @@
               <label for="temporadaCompeticion">Temporada:</label>
               <input type="number" min="1" class="form-control" id="temporadaCompeticion" ng-model="editor.model.season">
             </div>
-          <button  class="btn btn-default">Descargar</button>
+          <a ng-click="editor.generate()" ng-href="{{fileUrl}}" download="competition.json"  class="btn btn-default">Descargar</a>
       </form>
     </div>
 </div>
