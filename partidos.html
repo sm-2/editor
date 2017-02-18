@@ -1,15 +1,21 @@
 <!doctype html>
 <html lang="en">
-<head>
+ <head>
     <title>E-Sports Calendar Editor</title>
+    <link rel="icon" href="img/beta_icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
-
     <script src="jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/moment.js"></script>
+    <script type="text/javascript" src="js/transition.min.js"></script>
+    <script type="text/javascript" src="js/collapse.js"></script>
     <script src="bootstrap.min.js"></script>
+        <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script src="app.js"></script>
-</head>
+
+    <link rel="stylesheet" href="styles/bootstrap-datetimepicker.min.css" />
+  </head>
 <body ng-app="esportscalendar">
 
 <nav class="navbar navbar-default ">
@@ -44,7 +50,27 @@
                     <input type="datetime-local" class="form-control" id="fecha" placeholder="Fecha del partido"
                            ng-model="editor.model.date">
                 </div>
+
+                <div class='col-sm-6'>
+                    <div class="form-group">
+                         <label for="fecha">Fecha y hora:</label>
+                        <div class='input-group date' id='datetimepicker1'>
+                            <input type='text' class="form-control"  id="fecha1" ng-model="editor.model.date"/>
+                            <span class="input-group-addon">
+                                <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <script type="text/javascript">
+                    $(function () {
+                        $('#datetimepicker1').datetimepicker();
+                    });
+                </script>
+
+
             </div>
+
             <div class="col-md-6">
                 <div class="form-group">
                     <label for="equipoA">Equipo A:</label>
