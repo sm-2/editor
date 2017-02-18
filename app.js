@@ -20,6 +20,36 @@
 
             }
 
+        })
+        .controller('EditorPartidosController', function ($scope, $window) {
+
+            var ctrl = this;
+
+            var original = {
+                "teamA" : { "result" : 0 },
+                "teamB" : { "result" : 0 }
+            };
+
+            ctrl.model = angular.copy(original);
+
+            ctrl.list = [];
+
+            ctrl.add = function () {
+
+                ctrl.list.push(angular.copy(ctrl.model));
+                ctrl.model = angular.copy(original);
+
+            };
+
+            ctrl.generate = function() {
+
+                var blob = new Blob([JSON.stringify(ctrl.list)], { type: 'text/json;charset=utf-8' }),
+                    url = $window.URL || $window.webkitURL;
+
+                $scope.fileUrl = url.createObjectURL(blob);
+
+            }
+
         });
     
 

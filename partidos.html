@@ -1,90 +1,92 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <title>E-Sports Calendar Editor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
+
     <script src="jquery-3.1.1.min.js"></script>
     <script src="bootstrap.min.js"></script>
-    <script src="angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script src="app.js"></script>
-    <style>
+</head>
+<body ng-app="esportscalendar">
 
-    </style>
-  </head>
-<body ng-app="ShoppingListCheckOff">
-
-  <nav class="navbar navbar-default ">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">
-        <img alt="Brand" src="img/beta_icon.png" width="20px" height="20px">
-      </a>
+<nav class="navbar navbar-default ">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">
+                <img alt="Brand" src="img/beta_icon.png" width="20px" height="20px">
+            </a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="index.html">Competicion <span class="sr-only">(current)</span></a></li>
+                <li class="active"><a href="partidos.html">Partidos</a></li>
+                <li><a href="#">Equipos</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
     </div>
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav">
-        <li><a href="index.html">Competicion <span class="sr-only">(current)</span></a></li>
-        <li class="active"><a href="partidos.html">Partidos</a></li>
-        <li><a href="#">Equipos</a></li>
-      </ul>
-    </div><!-- /.navbar-collapse -->
-  </div>
 </nav>
 
-  <div class="container">
-  <h1>Partidos</h1>
+<div class="container" ng-controller="EditorPartidosController as editor">
+    <h1>Partidos</h1>
 
-  <div class="row">
+    <div class="row">
 
-    <!-- To Buy List -->
-    <form>
-    <div class="col-md-6" ng-controller ='ToBuyController as toBuy'>
-         <div class="form-group">
-            <label for="fecha">Fecha:</label>
-            <input type="text" class="form-control" id="fecha" placeholder="Fecha del partido en formato dd/mm/yyyy">
-          </div>
-          <div class="form-group">
-            <label for="equipoA">Equipo A:</label>
-            <input type="text" class="form-control" id="equipoA" placeholder="Nombre del Equipo A">
-          </div>
-          <div class="form-group">
-            <label for="resultadoEquipoA">Resultado Equipo A:</label>
-            <input type="text" class="form-control" id="resultadoEquipoA">
-          </div>
-        <button type="submit" class="btn btn-default">Add</button>
+        {{editor.model | json}}
+
+        <form>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="fecha">Fecha y hora:</label>
+                    <input type="datetime-local" class="form-control" id="fecha" placeholder="Fecha del partido"
+                           ng-model="editor.model.date">
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="equipoA">Equipo A:</label>
+                    <input type="text" class="form-control" id="equipoA" placeholder="Nombre del Equipo A"
+                           ng-model="editor.model.teamA.name">
+                </div>
+                <div class="form-group">
+                    <label for="resultadoEquipoA">Resultado Equipo A:</label>
+                    <input type="number" min="0" class="form-control" id="resultadoEquipoA"
+                           ng-model="editor.model.teamA.result">
+                </div>
+                <button ng-click="editor.add()" class="btn btn-default">Añadir</button>
+            </div>
+
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="equipoB">Equipo B:</label>
+                    <input type="text" class="form-control" id="equipoB" placeholder="Nombre Equipo B"
+                           ng-model="editor.model.teamB.name">
+                </div>
+                <div class="form-group">
+                    <label for="resultadoEquipoB">Resultado Equipo B:</label>
+                    <input type="number" min="0" class="form-control" id="resultadoEquipoB"
+                           ng-model="editor.model.teamB.result">
+                </div>
+            </div>
+        </form>
     </div>
 
-    <div class="col-md-6" ng-controller ='ToBuyController as toBuy'>
-           <div class="form-group">
-            <label for="hora">Hora:</label>
-            <input type="text" class="form-control" id="hora" placeholder="Hora del partido en formato HH:mm">
-          </div>
-          <div class="form-group">
-            <label for="equipoB">Equipo B:</label>
-            <input type="text" class="form-control" id="equipoB" placeholder="Nombre Equipo B">
-          </div>
-          <div class="form-group">
-            <label for="resultadoEquipoB">Resultado Equipo B:</label>
-            <input type="text" class="form-control" id="resultadoEquipoB">
-          </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h2>Partidos añadidos:</h2>
+            <ul>
+                <li ng-repeat= "item in editor.list">
+                    {{item}}
+                </li>
+            </ul>
+            <div ng-if="!editor.list.length" class="emptyMessage">Ningún partido añadido.</div>
+            <br>
+            <a ng-click="editor.generate()" ng-href="{{fileUrl}}" download="match.json"  class="btn btn-default">Descargar</a>
+        </div>
     </div>
-    </form>
-  </div>
-
-  <div class="row">
-   <div class="col-md-6" ng-controller="AlreadyBougthController as bougth">
-     <h2>Partidos añadidos:</h2>
-     <ul>
-       <li ng-repeat= "item in bougth.itemsBougth">
-         Bought {{item.quantity}} {{item.name}}
-       </li>
-     </ul>
-     <div ng-if="!bougth.itemsBougth.length" class="emptyMessage">Ningún partido añadido.</div>
-     <br>
-    <button type="submit" class="btn btn-default">Descargar</button>
-  </div>
-</div>
 
 </body>
 </html>
