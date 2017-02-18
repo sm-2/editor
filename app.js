@@ -2,7 +2,7 @@
     
     'use script';
 
-    angular.module('esportscalendar', [])
+    angular.module('esportscalendar', ['ui.bootstrap.datetimepicker'])
         .config(['$compileProvider', function ($compileProvider) {
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
         }])
@@ -36,6 +36,7 @@
 
             ctrl.add = function () {
 
+                ctrl.model.date = $window.matchdate;
                 ctrl.list.push(angular.copy(ctrl.model));
                 ctrl.model = angular.copy(original);
 
