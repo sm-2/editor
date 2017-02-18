@@ -5,16 +5,16 @@
     <link rel="icon" href="img/beta_icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
+     <link rel="stylesheet" href="node_modules/angular-bootstrap-datetimepicker/src/css/datetimepicker.css"/>
+
+
     <script src="jquery-3.1.1.min.js"></script>
-    <script type="text/javascript" src="js/moment.js"></script>
-    <script type="text/javascript" src="js/transition.min.js"></script>
-    <script type="text/javascript" src="js/collapse.js"></script>
     <script src="bootstrap.min.js"></script>
-        <script type="text/javascript" src="js/bootstrap-datetimepicker.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script src="app.js"></script>
-
-    <link rel="stylesheet" href="styles/bootstrap-datetimepicker.min.css" />
+     <script type="text/javascript" src="node_modules/moment/moment.js"></script>
+     <script type="text/javascript" src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.js"></script>
+     <script type="text/javascript" src="node_modules/angular-bootstrap-datetimepicker/src/js/datetimepicker.templates.js"></script>
   </head>
 <body ng-app="esportscalendar">
 
@@ -46,28 +46,18 @@
         <form>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="fecha">Fecha y hora:</label>
-                    <input type="datetime-local" class="form-control" id="fecha" placeholder="Fecha del partido"
-                           ng-model="editor.model.date">
-                </div>
-
-                <div class='col-sm-6'>
-                    <div class="form-group">
-                         <label for="fecha">Fecha y hora:</label>
-                        <div class='input-group date' id='datetimepicker1'>
-                            <input type='text' class="form-control"  id="fecha1" ng-model="editor.model.date"/>
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
+                    <label >Fecha y hora:</label>
+                    <div class="dropdown">
+                        <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" href="#">
+                            <div class="input-group"><input type="text" class="form-control" data-ng-model="editor.model.date">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                            <datetimepicker data-ng-model="editor.model.date" data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle' }"/>
+                        </ul>
                     </div>
                 </div>
-                <script type="text/javascript">
-                    $(function () {
-                        $('#datetimepicker1').datetimepicker();
-                    });
-                </script>
-
 
             </div>
 
