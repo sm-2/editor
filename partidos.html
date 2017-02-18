@@ -40,47 +40,50 @@
     <!-- To Buy List -->
     <form>
     <div class="col-md-6" ng-controller ='ToBuyController as toBuy'>
-         
-          <div class="form-group">
-            <label for="equipoA">Equipo A:</label>
-            <input type="text" class="form-control" id="equipoA">
+         <div class="form-group">
+            <label for="fecha">Fecha:</label>
+            <input type="text" class="form-control" id="fecha" placeholder="Fecha del partido en formato dd/mm/yyyy">
           </div>
           <div class="form-group">
-            <label for="fecha">Fecha:</label>
-            <input type="text" class="form-control" id="fecha">
+            <label for="equipoA">Equipo A:</label>
+            <input type="text" class="form-control" id="equipoA" placeholder="Nombre del Equipo A">
           </div>
           <div class="form-group">
             <label for="resultadoEquipoA">Resultado Equipo A:</label>
             <input type="text" class="form-control" id="resultadoEquipoA">
           </div>
-          <div class="form-group">
-            <label for="temporadaCompeticion">Temporada:</label>
-            <input type="text" class="form-control" id="temporadaCompeticion">
-          </div>
-        <button type="submit" class="btn btn-default">Descargar</button>
+        <button type="submit" class="btn btn-default">Add</button>
     </div>
 
     <div class="col-md-6" ng-controller ='ToBuyController as toBuy'>
-         
-          <div class="form-group">
-            <label for="equipoB">Equipo B:</label>
-            <input type="text" class="form-control" id="equipoB">
+           <div class="form-group">
+            <label for="hora">Hora:</label>
+            <input type="text" class="form-control" id="hora" placeholder="Hora del partido en formato HH:mm">
           </div>
           <div class="form-group">
-            <label for="hora">Hora:</label>
-            <input type="text" class="form-control" id="hora">
+            <label for="equipoB">Equipo B:</label>
+            <input type="text" class="form-control" id="equipoB" placeholder="Nombre Equipo B">
           </div>
           <div class="form-group">
             <label for="resultadoEquipoB">Resultado Equipo B:</label>
             <input type="text" class="form-control" id="resultadoEquipoB">
           </div>
-          <div class="form-group">
-            <label for="temporadaCompeticion">Temporada:</label>
-            <input type="text" class="form-control" id="temporadaCompeticion">
-          </div>
-        <button type="submit" class="btn btn-default">Descargar</button>
     </div>
     </form>
+  </div>
+
+  <div class="row">
+   <div class="col-md-6" ng-controller="AlreadyBougthController as bougth">
+     <h2>Partidos añadidos:</h2>
+     <ul>
+       <li ng-repeat= "item in bougth.itemsBougth">
+         Bought {{item.quantity}} {{item.name}}
+       </li>
+     </ul>
+     <div ng-if="!bougth.itemsBougth.length" class="emptyMessage">Ningún partido añadido.</div>
+     <br>
+    <button type="submit" class="btn btn-default">Descargar</button>
+  </div>
 </div>
 
 </body>
