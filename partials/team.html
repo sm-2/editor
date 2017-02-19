@@ -1,0 +1,69 @@
+<div ng-controller="EditorEquiposController as editor">
+    <h1>Equipos</h1>
+    {{editor.model}}
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <form>
+                <div class="form-group">
+                    <label for="nombreEquipo">Nombre Equipo:</label>
+                    <input type="text" class="form-control" id="nombreEquipo" ng-model="editor.model.name">
+                </div>
+
+                <div class="form-group">
+                    <label for="descripcionEquipo">Descripcion del equipo:</label>
+                    <input type="text" class="form-control" id="descripcionEquipo" ng-model="editor.model.descripcion">
+                </div>
+
+                <div class="form-group controls">
+                    <div>
+                        <label>Redes Sociales: (Presiona + para añadir una red social)</label>
+                        <div ng-repeat="social in editor.model.social">
+                            <select ng-model="social.name" class="form-control" id="sel1" style="margin-bottom: 10px">
+                                <option value="twitter">Twitter</option>
+                                <option value="facebook">Facebook</option>
+                                <option value="youtube">Youtube</option>
+                                <option value="twitch">Twitch</option>
+                            </select>
+                            <input ng-model="social.url" autocomplete="off" class="input form-control" type="text" placeholder="Introduce la red social" data-items="8"/>
+                            <button ng-if="editor.model.social.length == $index + 1" ng-click="editor.addSocialNetwork()" class="btn add-more" type="button" style="margin: 10px">+</button>
+                            <button ng-hide="editor.model.social.length == $index + 1" ng-click="editor.removeSocialNetwork($index)" class="btn add-more" type="button" style="margin: 10px">-</button>
+                        </div>
+
+                    </div>
+                    <br>
+                </div>
+
+                <div class="form-group controls">
+                    <div id="field">
+                        <label>Roster: (Presiona + para añadir un nuevo jugador)</label>
+                        <div ng-repeat="player in editor.model.player">
+                            <input autocomplete="off" class="input form-control" type="text" placeholder="Introduce la posicion del jugador" data-items="8" style="margin-bottom: 10px"/>
+                            <input autocomplete="off" class="input form-control" type="text" placeholder="Introduce el nombre del jugador" data-items="8"/>
+                            <button ng-if="editor.model.player.length == $index + 1" ng-click="editor.addPlayer()" class="btn add-more" type="button" style="margin: 10px">+</button>
+                            <button ng-hide="editor.model.player.length == $index + 1" ng-click="editor.removePlayer($index)" class="btn add-more" type="button" style="margin: 10px">-</button>
+                        </div>
+
+                        <br>
+
+                    </div>
+
+                    <a ng-click="editor.add()" class="btn btn-default">Añadir Equipo</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h2>Equipos añadidos:</h2>
+        <ul>
+            <li ng-repeat="item in editor.list" style="margin-bottom: 5px">
+                <a ng-click="editor.removeTeam($index)" class="btn btn-default btn-danger"> X </a>
+                {{item.name}}
+            </li>
+        </ul>
+        <div ng-if="!editor.list.length" class="emptyMessage">Ningún equipo añadido.</div>
+        <br>
+        <a ng-click="editor.generate()" ng-href="{{fileUrl}}" download="teams.json" class="btn btn-default">Descargar</a>
+    </div>
+</div>

@@ -5,14 +5,15 @@
     <link rel="icon" href="img/beta_icon.png">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="styles/bootstrap.min.css">
-    <script src="jquery-3.1.1.min.js"></script>
-    <script src="bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
-    <script src="app.js"></script>
 
+    <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.1/angular.min.js"></script>
     <script type="text/javascript" src="js/moment.js"></script>
     <script type="text/javascript" src="js/datetimepicker.js"></script>
     <script type="text/javascript" src="js/datetimepicker.templates.js"></script>
+    <script type="text/javascript" src="js/angular-ui-router.min.js"></script>
+    <script type="text/javascript" src="js/app.js"></script>
 </head>
 <body ng-app="esportscalendar">
 
@@ -32,36 +33,16 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="index.html">Competicion <span class="sr-only">(current)</span></a></li>
-                <li><a href="partidos.html">Partidos</a></li>
-                <li><a href="equipos.html">Equipos</a></li>
+                <li><a ui-sref="competition">Competicion</a></li>
+                <li><a ui-sref="match">Partidos</a></li>
+                <li><a ui-sref="team">Equipos</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div>
 </nav>
-
 <div class="container">
-    <h1>Competiciones</h1>
-
-    <div class="row">
-    <div class="col-md-6" ng-controller ='EditorCompeticionController as editor'>
-        {{editor.model}}
-         <form>
-            <div class="form-group">
-              <label for="nombreCompeticion">Nombre Competicion:</label>
-              <input type="text" class="form-control" id="nombreCompeticion" ng-model="editor.model.name">
-            </div>
-            <div class="form-group">
-              <label for="juegoCompeticion">Juego:</label>
-              <input type="text" class="form-control" id="juegoCompeticion" ng-model="editor.model.game">
-            </div>
-            <div class="form-group">
-              <label for="plataformaCompeticion">Plataforma:</label>
-              <input type="text" class="form-control" id="plataformaCompeticion" ng-model="editor.model.platform">
-            </div>
-          <a ng-click="editor.generate()" ng-href="{{fileUrl}}" download="competition.json"  class="btn btn-default">Descargar</a>
-      </form>
-    </div>
+    <ui-view></ui-view>
+</div>
 
 </body>
 </html>

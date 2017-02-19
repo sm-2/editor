@@ -2,9 +2,29 @@
     
     'use script';
 
-    angular.module('esportscalendar', ['ui.bootstrap.datetimepicker'])
-        .config(['$compileProvider', function ($compileProvider) {
+    angular.module('esportscalendar', ['ui.bootstrap.datetimepicker', 'ui.router'])
+        .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', function ($compileProvider, $stateProvider,$urlRouterProvider) {
             $compileProvider.aHrefSanitizationWhitelist(/^\s*(|blob|):/);
+
+            $stateProvider
+                .state({
+                    'name' : 'competition',
+                    'url' : '/competition',
+                    'templateUrl' : 'partials/competition.html'
+                })
+                .state({
+                    'name' : 'match',
+                    'url' : '/match',
+                    'templateUrl' : 'partials/match.html'
+                })
+                .state({
+                    'name' : 'team',
+                    'url' : '/team',
+                    'templateUrl' : 'partials/team.html'
+                });
+
+            $urlRouterProvider.otherwise('/competition');
+
         }])
         .controller('EditorCompeticionController', function ($scope, $window) {
 
