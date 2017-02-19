@@ -93,10 +93,23 @@
 
                 </div>
 
-                <a ng-click="editor.generate()" ng-href="{{fileUrl}}" download="competition.json"  class="btn btn-default">Descargar</a>
+                <a ng-click="editor.add()" class="btn btn-default">Añadir Equipo</a>
             </form>
         </div>
     </div>
+
+        <div class="col-md-6">
+            <h2>Equipos añadidos:</h2>
+            <ul>
+                <li ng-repeat="item in editor.list" style="margin-bottom: 5px">
+                <a ng-click="editor.removeTeam($index)" class="btn btn-default btn-danger"> X </a>
+                    {{item.name}}
+                </li>
+            </ul>
+            <div ng-if="!editor.list.length" class="emptyMessage">Ningún equipo añadido.</div>
+            <br>
+            <a ng-click="editor.generate()" ng-href="{{fileUrl}}" download="teams.json" class="btn btn-default">Descargar</a>
+        </div>
 </div>
 </body>
 </html>

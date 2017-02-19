@@ -103,7 +103,7 @@
             <h2>Partidos añadidos:</h2>
             <ul>
                 <li ng-repeat="item in editor.list">
-                    {{item}}
+                    {{item.teamA.name}} vs {{item.teamB.name}}
                 </li>
             </ul>
             <div ng-if="!editor.list.length" class="emptyMessage">Ningún partido añadido.</div>

@@ -66,6 +66,8 @@
             };
 
             var original = {
+                "name":"",
+                "descripcion":"",
                 "social" : [
                     {
                         "name" : "twitter",
@@ -98,6 +100,17 @@
 
             ctrl.removePlayer = function (index) {
                 ctrl.model.player.splice(index, 1);
+            };
+
+            ctrl.add = function () {
+
+                ctrl.list.push(angular.copy(ctrl.model));
+                ctrl.model = angular.copy(original);
+
+            };
+
+            ctrl.removeTeam = function (index) {
+                ctrl.list.splice(index, 1);
             };
 
             ctrl.generate = function() {
