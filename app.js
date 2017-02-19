@@ -60,11 +60,22 @@
                 "url" : ""
             };
 
+            var player = {
+                "position" : "",
+                "name" : ""
+            };
+
             var original = {
                 "social" : [
                     {
                         "name" : "twitter",
                         "url" : ""
+                    }
+                ],
+                "player" : [
+                    {
+                        "position" : "",
+                        "name" : ""
                     }
                 ]
             };
@@ -75,9 +86,19 @@
 
             ctrl.addSocialNetwork = function () {
                 ctrl.model.social.push(angular.copy(social));
-                console.log(ctrl.model.social);
             };
 
+            ctrl.removeSocialNetwork = function (index) {
+                ctrl.model.social.splice(index, 1);
+            };
+
+            ctrl.addPlayer = function () {
+                ctrl.model.player.push(angular.copy(player));
+            };
+
+            ctrl.removePlayer = function (index) {
+                ctrl.model.player.splice(index, 1);
+            };
 
             ctrl.generate = function() {
 
