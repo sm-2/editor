@@ -55,13 +55,28 @@
 
             var ctrl = this;
 
+            var social = {
+                "name" : "twitter",
+                "url" : ""
+            };
+
             var original = {
-                
+                "social" : [
+                    {
+                        "name" : "twitter",
+                        "url" : ""
+                    }
+                ]
             };
 
             ctrl.model = angular.copy(original);
 
             ctrl.list = [];
+
+            ctrl.addSocialNetwork = function () {
+                ctrl.model.social.push(angular.copy(social));
+                console.log(ctrl.model.social);
+            };
 
 
             ctrl.generate = function() {
