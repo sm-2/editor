@@ -82,6 +82,7 @@
 
             var player = {
                 "position" : "",
+                "nick" : "",
                 "name" : ""
             };
 
@@ -97,6 +98,7 @@
                 "player" : [
                     {
                         "position" : "",
+                        "nick" : "",
                         "name" : ""
                     }
                 ]

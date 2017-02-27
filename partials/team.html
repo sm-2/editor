@@ -26,7 +26,7 @@
                                 <option value="youtube">Youtube</option>
                                 <option value="twitch">Twitch</option>
                             </select>
-                            <input ng-model="social.url" autocomplete="off" class="input form-control" type="text" placeholder="Introduce la red social" data-items="8"/>
+                            <input ng-model="social.url" autocomplete="off" class="input form-control" type="text" placeholder="Introduce la red social"/>
                             <button ng-if="editor.model.social.length == $index + 1" ng-click="editor.addSocialNetwork()" class="btn add-more" type="button" style="margin: 10px">+</button>
                             <button ng-hide="editor.model.social.length == $index + 1" ng-click="editor.removeSocialNetwork($index)" class="btn add-more" type="button" style="margin: 10px">-</button>
                         </div>
@@ -39,8 +39,9 @@
                     <div id="field">
                         <label>Roster: (Presiona + para añadir un nuevo jugador)</label>
                         <div ng-repeat="player in editor.model.player">
-                            <input autocomplete="off" class="input form-control" type="text" placeholder="Introduce la posicion del jugador" data-items="8" style="margin-bottom: 10px"/>
-                            <input autocomplete="off" class="input form-control" type="text" placeholder="Introduce el nombre del jugador" data-items="8"/>
+                            <input autocomplete="off" class="input form-control" type="text" placeholder="Introduce la posicion del jugador" style="margin-bottom: 10px" ng-model="player.position"/>
+                            <input autocomplete="off" class="input form-control" type="text" placeholder="Introduce el nick del jugador" style="margin-bottom: 10px" ng-model="player.nick"/>
+                            <input autocomplete="off" class="input form-control" type="text" placeholder="Introduce el nombre real del jugador" ng-model="player.name" />
                             <button ng-if="editor.model.player.length == $index + 1" ng-click="editor.addPlayer()" class="btn add-more" type="button" style="margin: 10px">+</button>
                             <button ng-hide="editor.model.player.length == $index + 1" ng-click="editor.removePlayer($index)" class="btn add-more" type="button" style="margin: 10px">-</button>
                         </div>
