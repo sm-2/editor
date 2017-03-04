@@ -4,11 +4,16 @@
 
     <div class="row">
 
-        <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data" action="http://localhost:8080/team" class="col-md-6">
             <form>
                 <div class="form-group">
+                    <label for="nombreEquipo">Logo del equipo:</label>
+                    <input type="file" class="form-control" id="logo" name="logo" ng-model="editor.model.logo">
+                </div>
+                <input type="submit">
+                <div class="form-group">
                     <label for="nombreEquipo">Nombre Equipo:</label>
-                    <input type="text" class="form-control" id="nombreEquipo" ng-model="editor.model.name">
+                    <input type="text" class="form-control" name="name" id="nombreEquipo" ng-model="editor.model.name">
                 </div>
 
                 <div class="form-group">
@@ -52,7 +57,7 @@
 
                     <a ng-click="editor.add()" class="btn btn-default">Añadir Equipo</a>
             </form>
-        </div>
+        </form>
     </div>
 
     <div class="col-md-6">
