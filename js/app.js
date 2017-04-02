@@ -18,8 +18,13 @@
                     'templateUrl' : 'partials/match.html'
                 })
                 .state({
+                    'name' : 'teams',
+                    'url' : '/teams',
+                    'templateUrl' : 'partials/teams.html'
+                })
+                .state({
                     'name' : 'team',
-                    'url' : '/team',
+                    'url' : '/team/:id',
                     'templateUrl' : 'partials/team.html'
                 });
 
@@ -71,77 +76,39 @@
             }
 
         })
-        .controller('EditorEquiposController', function ($scope, $window) {
+        .controller('EditorEquiposController', function ($stateParams,$http) {
 
             var ctrl = this;
 
-            var social = {
-                "name" : "twitter",
-                "url" : ""
-            };
+            $http({
+                method: 'GET',
+                url: 'https://api-esports.herokuapp.com/team/'+$stateParams.id
+            }).then(function successCallback(response) {
+                ctrl.team = response.data;
+                console.log(ctrl.team)
+            }, function errorCallback(response) {
+                console.log("error listar equipo")
+            });
 
-            var player = {
-                "position" : "",
-                "nick" : "",
-                "name" : ""
-            };
 
-            var original = {
-                "name":"",
-                "descripcion":"",
-                "social" : [
-                    {
-                        "name" : "twitter",
-                        "url" : ""
-                    }
-                ],
-                "player" : [
-                    {
-                        "position" : "",
-                        "nick" : "",
-                        "name" : ""
-                    }
-                ]
-            };
+        })
+        .controller('ListarEquiposController', function ($http,$state) {
 
-            ctrl.model = angular.copy(original);
+            var ctrl = this;
 
-            ctrl.list = [];
+            ctrl.teams = [];
 
-            ctrl.addSocialNetwork = function () {
-                ctrl.model.social.push(angular.copy(social));
-            };
+            $http({
+                method: 'GET',
+                url: 'https://api-esports.herokuapp.com/team'
+            }).then(function successCallback(response) {
+                ctrl.teams = response.data.data;
+            }, function errorCallback(response) {
+                console.log("error listar equipo")
+            });
 
-            ctrl.removeSocialNetwork = function (index) {
-                ctrl.model.social.splice(index, 1);
-            };
-
-            ctrl.addPlayer = function () {
-                ctrl.model.player.push(angular.copy(player));
-            };
-
-            ctrl.removePlayer = function (index) {
-                ctrl.model.player.splice(index, 1);
-            };
-
-            ctrl.add = function () {
-
-                ctrl.list.push(angular.copy(ctrl.model));
-                ctrl.model = angular.copy(original);
-
-            };
-
-            ctrl.removeTeam = function (index) {
-                ctrl.list.splice(index, 1);
-            };
-
-            ctrl.generate = function() {
-
-                var blob = new Blob([JSON.stringify(ctrl.list)], { type: 'text/json;charset=utf-8' }),
-                    url = $window.URL || $window.webkitURL;
-
-                $scope.fileUrl = url.createObjectURL(blob);
-
+            ctrl.editTeam = function(id) {
+                $state.go('team',{'id':id});
             }
 
         });
