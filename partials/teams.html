@@ -1,0 +1,9 @@
+<h1>Competiciones</h1>
+<div class="row">
+    <div class="col-md-6" ng-controller ='EditorEquiposController as editor'>
+        <tr ng-repeat="provincia in provincias | orderBy:['nombre','codProvincia']">
+            <td>{{provincia.codProvincia}}</td>
+            <td>{{provincia.nombre}}</td>
+        </tr>
+    </div>
+</div>
