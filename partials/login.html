@@ -1,0 +1,22 @@
+<form ng-controller="LoginController as login">
+    <div class="col-md-6 col-md-offset-3">
+        <div ng-show="login.msg" class="alert alert-danger">
+            {{login.msg}}
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+            <label>Email</label>
+            <input type="text" class="form-control" ng-model="login.email">
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+        <div class="form-group">
+            <label>Contraseña</label>
+            <input type="password" class="form-control" ng-model="login.password">
+        </div>
+    </div>
+    <div class="col-md-6 col-md-offset-3">
+        <button ng-click="login.login()" class="btn btn-primary">Iniciar sesión</button>
+    </div>
+</form>

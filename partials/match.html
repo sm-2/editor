@@ -1,20 +1,29 @@
 <div ng-controller="EditorPartidosController as editor">
     <h1>Partidos</h1>
-    {{editor.model | json}}
+    <label>¿Partido finalizado?</label>
+    <input type="checkbox" ng-model="editor.match.finished">
     <div class="row">
         <form>
-            <div class="col-md-12">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label>Competición:</label>
+                    <select class="form-control" ng-model="editor.match.CompetitionGameId">
+                        <option ng-repeat="competitionGame in editor.competitionsGames" value="{{competitionGame.id}}">{{competitionGame.Competition.name}}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
                 <div class="form-group">
                     <label>Fecha y hora:</label>
                     <div class="dropdown">
                         <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" href="javascript:void(0);">
                             <div class="input-group"><input type="text" class="form-control"
-                                                            data-ng-model="editor.model.date">
+                                                            data-ng-model="editor.match.start_date">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </a>
                         <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-                            <datetimepicker data-ng-model="editor.model.date"
+                            <datetimepicker data-ng-model="editor.match.start_date"
                                             data-datetimepicker-config="{ dropdownSelector: '.dropdown-toggle' }"/>
                         </ul>
                     </div>
@@ -22,42 +31,30 @@
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="equipoA">Equipo A:</label>
-                    <input type="text" class="form-control" id="equipoA" placeholder="Nombre del Equipo A"
-                           ng-model="editor.model.teamA.name">
+                    <label>Equipo A:</label>
+                    <select class="form-control" ng-model="editor.match.team_a">
+                        <option ng-repeat="team in editor.teams" value="{{team.id}}">{{team.name}}</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="resultadoEquipoA">Resultado Equipo A:</label>
-                    <input type="number" min="0" class="form-control" id="resultadoEquipoA"
-                           ng-model="editor.model.teamA.result">
+                    <label>Resultado Equipo A:</label>
+                    <input type="number" min="0" class="form-control" ng-model="editor.match.result_a">
                 </div>
-                <button ng-click="editor.add()" class="btn btn-default">Añadir</button>
             </div>
             <div class="col-md-6">
                 <div class="form-group">
-                    <label for="equipoB">Equipo B:</label>
-                    <input type="text" class="form-control" id="equipoB" placeholder="Nombre Equipo B"
-                           ng-model="editor.model.teamB.name">
+                    <label>Equipo B:</label>
+                    <select class="form-control" ng-model="editor.match.team_b">
+                        <option ng-repeat="team in editor.teams" value="{{team.id}}">{{team.name}}</option>
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label for="resultadoEquipoB">Resultado Equipo B:</label>
-                    <input type="number" min="0" class="form-control" id="resultadoEquipoB"
-                           ng-model="editor.model.teamB.result">
+                    <label>Resultado Equipo B:</label>
+                    <input type="number" min="0" class="form-control" ng-model="editor.match.result_b">
                 </div>
             </div>
+            <button ng-click="editor.save()" class="btn bg-primary">Guardar</button>
         </form>
     </div>
-    <div class="row">
-        <div class="col-md-6">
-            <h2>Partidos añadidos:</h2>
-            <ul>
-                <li ng-repeat="item in editor.list">
-                    {{item}}
-                </li>
-            </ul>
-            <div ng-if="!editor.list.length" class="emptyMessage">Ningún partido añadido.</div>
-            <br>
-            <a ng-click="editor.generate()" ng-href="{{fileUrl}}" download="match.json" class="btn btn-default">Descargar</a>
-        </div>
-    </div>
+
 </div>
