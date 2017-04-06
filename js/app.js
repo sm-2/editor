@@ -7,7 +7,7 @@
         if(!token) throw new Error('401');
     }
 
-    angular.module('esportscalendar', ['ui.bootstrap.datetimepicker', 'ui.router', 'LocalStorageModule'])
+    angular.module('esportscalendar', ['ui.bootstrap.datetimepicker', 'ui.router', 'LocalStorageModule', 'ngTable'])
         .constant('API', {'base' : 'https://api-esports.herokuapp.com'}) //
         .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', 'localStorageServiceProvider',
             function ($compileProvider, $stateProvider,$urlRouterProvider, localStorageServiceProvider) {
@@ -93,7 +93,7 @@
             }
 
         })
-        .controller('ListarPartidosController', function ($http,$state, API) {
+        .controller('ListarPartidosController', function ($http,$state, API, NgTableParams) {
 
             var ctrl = this;
 
@@ -104,7 +104,7 @@
                 url: API.base + '/match'
             }).then(function successCallback(response) {
                 ctrl.matches = response.data.data;
-                console.log(ctrl.matches);
+                ctrl.tableParams = new NgTableParams({ "sorting": { start_date : "asc" }}, { "dataset" : ctrl.matches });
             }, function errorCallback(response) {
                 console.log("error" + response);
             });
@@ -123,7 +123,6 @@
                 url: API.base + '/team'
             }).then(function successCallback(response) {
                 ctrl.teams = response.data.data;
-                console.log(ctrl.teams);
             }, function errorCallback(response) {
                 console.log("error" + response);
             });
@@ -133,7 +132,6 @@
                 url: API.base + '/competitionGame'
             }).then(function successCallback(response) {
                 ctrl.competitionsGames = response.data.data;
-                console.log(ctrl.competitionsGames);
             }, function errorCallback(response) {
                 console.log("error" + response);
             });
@@ -144,7 +142,6 @@
                     url: API.base + '/match/'+$stateParams.id
                 }).then(function successCallback(response) {
                     ctrl.match = response.data.data;
-                    console.log(ctrl.match);
                     ctrl.match.team_a = ctrl.match.teamAId+"";
                     ctrl.match.team_b = ctrl.match.teamBId+"";
                     ctrl.match.CompetitionGameId = ctrl.match.CompetitionGameId+"";
@@ -171,7 +168,6 @@
                 }).then(function successCallback(response) {
                     $state.go('matches');
                     ctrl.match = response.data;
-                    console.log(ctrl.match);
                 }, function errorCallback(response) {
                     console.log("error" + response);
                 });
@@ -190,7 +186,6 @@
                 url: API.base + '/competitionGame'
             }).then(function successCallback(response) {
                 ctrl.competitionsGames = response.data.data;
-                console.log(ctrl.competitionsGames);
             }, function errorCallback(response) {
                 console.log("error" + response);
             });
@@ -201,7 +196,6 @@
                     url: API.base + '/team/'+$stateParams.id
                 }).then(function successCallback(response) {
                     ctrl.team = response.data;
-                    console.log(ctrl.team);
                     ctrl.team.CompetitionGameId = ctrl.team.CompetitionGameId+"";
                 }, function errorCallback(response) {
                     console.log("error listar equipo")
@@ -226,7 +220,6 @@
                 }).then(function successCallback(response) {
                     $state.go('teams');
                     ctrl.team = response.data;
-                    console.log(ctrl.team);
                 }, function errorCallback(response) {
                     console.log("error" + response);
                 });
@@ -234,7 +227,7 @@
 
 
         })
-        .controller('ListarEquiposController', function ($http,$state, API) {
+        .controller('ListarEquiposController', function ($http,$state, API, NgTableParams) {
 
             var ctrl = this;
 
@@ -245,7 +238,7 @@
                 url: API.base + '/team'
             }).then(function successCallback(response) {
                 ctrl.teams = response.data.data;
-                console.log(ctrl.teams);
+                ctrl.tableParams = new NgTableParams({}, { "dataset" : ctrl.teams });
             }, function errorCallback(response) {
                 console.log("error" + response);
             });

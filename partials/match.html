@@ -1,9 +1,16 @@
 <div ng-controller="EditorPartidosController as editor">
     <h1>Partidos</h1>
-    <label>¿Partido finalizado?</label>
-    <input type="checkbox" ng-model="editor.match.finished">
+
     <div class="row">
         <form>
+            <div class="col-md-6">
+                <label>¿Partido finalizado?</label>
+                <input type="checkbox" ng-model="editor.match.finished">
+            </div>
+            <div class="col-md-6">
+                <label>Jornada</label>
+                <input class="form-control" type="number" ng-model="editor.match.round">
+            </div>
             <div class="col-md-6">
                 <div class="form-group">
                     <label>Competición:</label>

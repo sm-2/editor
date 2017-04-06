@@ -2,35 +2,27 @@
 <a ui-sref="match">Nuevo partido</a>
 <div class="row">
 
-    <div class="col-md-6" ng-controller ='ListarPartidosController as editor'>
-
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Equipo A</th>
-                    <th>Equipo B</th>
-                    <th>Fecha</th>
-                    <th>Editar</th>
-                </tr>
-            </thead>
-            <tbody ng-repeat="match in editor.matches">
-                <tr>
-                    <td>
-                        {{match.team_a.name}}
-                    </td>
-                    <td>
-                        {{match.team_b.name}}
-                    </td>
-                    <td>
-                        {{match.start_date}}
-                    </td>
-                    <td>
-                        <button class="btn btn-default" ng-click="editor.editMatch(match.id)">
-                            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
+    <div class="col-md-12" ng-controller ='ListarPartidosController as editor'>
+        <table ng-table="editor.tableParams" class="table table-condensed table-bordered table-striped" show-filter="true">
+            <tr ng-repeat="match in $data">
+                <td title="'Equipo A'" filter="{ 'team_a.name': 'text'}" sortable="'team_a.name'">
+                    <img width="35px" src="{{match.team_a.logo}}"> {{match.team_a.name}}
+                </td>
+                <td title="'Equipo B'" filter="{ 'team_b.name': 'text'}" sortable="'team_b.name'">
+                    <img width="35px" src="{{match.team_b.logo}}"> {{match.team_b.name}}
+                </td>
+                <td title="'Jornada'" filter="{ round: 'text'}" sortable="'round'" class="text-center">
+                    {{ match.round }}
+                </td>
+                <td title="'Fecha'" filter="{ start_date: 'text'}" sortable="'start_date'" class="text-center">
+                    {{match.start_date | date : 'dd/MM/yyyy HH:mm' }}
+                </td>
+                <td title="'Editar'" class="text-center">
+                    <button class="btn btn-default" ng-click="editor.editMatch(match.id)">
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    </button>
+                </td>
+            </tr>
         </table>
     </div>
 </div>
