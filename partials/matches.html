@@ -14,6 +14,11 @@
                 <td title="'Jornada'" filter="{ round: 'text'}" sortable="'round'" class="text-center">
                     {{ match.round }}
                 </td>
+                <!-- Sergio 8/04  -->
+                <td title="'Terminado'" filter="{ finished: 'text'}" sortable="'finished'" class="text-center">
+                    <input type="checkbox" ng-disabled="true" ng-model=" match.finished">
+                </td>
+                <!-- -->
                 <td title="'Fecha'" filter="{ start_date: 'text'}" sortable="'start_date'" class="text-center">
                     {{match.start_date | date : 'dd/MM/yyyy HH:mm' }}
                 </td>
