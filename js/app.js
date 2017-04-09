@@ -8,8 +8,8 @@
     }
 
     angular.module('esportscalendar', ['ui.bootstrap.datetimepicker', 'ui.router', 'LocalStorageModule', 'ngTable'])
-        //.constant('API', {'base' : 'https://api-esports.herokuapp.com'}) //
-        .constant('API', {'base' : 'http://localhost:8080'}) //
+        .constant('API', {'base' : 'https://api-esports.herokuapp.com'}) //
+        //.constant('API', {'base' : 'http://localhost:8080'}) //
         .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', 'localStorageServiceProvider',
             function ($compileProvider, $stateProvider,$urlRouterProvider, localStorageServiceProvider) {
 
