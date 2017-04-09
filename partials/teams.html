@@ -1,7 +1,13 @@
 <h1>Lista equipos</h1>
-<a ui-sref="team">Nuevo equipo</a>
+
 <div class="row">
     <div class="col-md-12" ng-controller ='ListarEquiposController as editor'>
+
+        <button class="btn btn-default" ng-click="editor.newTeam()" style="margin-bottom: 10px">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            <span>Nuevo Equipo</span>
+        </button>
+
         <table ng-table="editor.tableParams" class="table table-condensed table-bordered table-striped" show-filter="true">
             <tr ng-repeat="team in $data">
                 <td title="'Logo'" class="text-center">

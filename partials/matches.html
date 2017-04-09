@@ -1,8 +1,13 @@
 <h1>Lista partidos</h1>
-<a ui-sref="match">Nuevo partido</a>
 <div class="row">
 
     <div class="col-md-12" ng-controller ='ListarPartidosController as editor'>
+
+        <button class="btn btn-default" ng-click="editor.newMatch()" style="margin-bottom: 10px">
+            <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span>
+            <span>Nuevo Partido</span>
+        </button>
+
         <table ng-table="editor.tableParams" class="table table-condensed table-bordered table-striped" show-filter="true">
             <tr ng-repeat="match in $data">
                 <td title="'Equipo A'" filter="{ 'team_a.name': 'text'}" sortable="'team_a.name'">
@@ -15,7 +20,7 @@
                     {{ match.round }}
                 </td>
                 <!-- Sergio 8/04  -->
-                <td title="'Terminado'" filter="{ finished: 'text'}" sortable="'finished'" class="text-center">
+                <td title="'Terminado'" class="text-center">
                     <input type="checkbox" ng-disabled="true" ng-model=" match.finished">
                 </td>
                 <!-- -->

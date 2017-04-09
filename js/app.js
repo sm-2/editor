@@ -8,8 +8,8 @@
     }
 
     angular.module('esportscalendar', ['ui.bootstrap.datetimepicker', 'ui.router', 'LocalStorageModule', 'ngTable'])
-        .constant('API', {'base' : 'https://api-esports.herokuapp.com'}) //
-        //.constant('API', {'base' : 'http://localhost:8080'}) //
+        //.constant('API', {'base' : 'https://api-esports.herokuapp.com'}) //
+        .constant('API', {'base' : 'http://localhost:8080'}) //
         .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', 'localStorageServiceProvider',
             function ($compileProvider, $stateProvider,$urlRouterProvider, localStorageServiceProvider) {
 
@@ -33,6 +33,14 @@
                     }
                 })
                 .state({
+                    'name' : 'matchNew',
+                    'url' : '/match',
+                    'templateUrl' : 'partials/match.html',
+                    'resolve': {
+                        'validate': isLogedIn
+                    }
+                })
+                .state({
                     'name' : 'teams',
                     'url' : '/teams',
                     'templateUrl' : 'partials/teams.html',
@@ -43,6 +51,14 @@
                 .state({
                     'name' : 'team',
                     'url' : '/team/:id',
+                    'templateUrl' : 'partials/team.html',
+                    'resolve': {
+                        'validate': isLogedIn
+                    }
+                })
+                .state({
+                    'name' : 'teamNew',
+                    'url' : '/team',
                     'templateUrl' : 'partials/team.html',
                     'resolve': {
                         'validate': isLogedIn
@@ -112,6 +128,9 @@
 
             ctrl.editMatch = function(id) {
                 $state.go('match',{'id':id});
+            }
+            ctrl.newMatch = function(id) {
+                $state.go('matchNew');
             }
 
         })
@@ -246,6 +265,10 @@
 
             ctrl.editTeam = function(id) {
                 $state.go('team',{'id':id});
+            }
+
+            ctrl.newTeam = function(id) {
+                $state.go('teamNew');
             }
 
         });
