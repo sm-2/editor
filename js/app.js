@@ -65,6 +65,30 @@
                     }
                 })
                 .state({
+                    'name' : 'roster',
+                    'url' : '/roster/:{Players:json}',
+                    'templateUrl' : 'partials/roster.html',
+                    'resolve': {
+                        'validate': isLogedIn
+                    }
+                })
+                .state({
+                    'name' : 'player',
+                    'url' : '/player/:{Player:json}',
+                    'templateUrl' : 'partials/player.html',
+                    'resolve': {
+                        'validate': isLogedIn
+                    }
+                })
+                .state({
+                    'name' : 'playerNew',
+                    'url' : '/player',
+                    'templateUrl' : 'partials/player.html',
+                    'resolve': {
+                        'validate': isLogedIn
+                    }
+                })
+                .state({
                     'name' : 'login',
                     'url' : '/login',
                     'templateUrl' : 'partials/login.html'
@@ -245,6 +269,11 @@
                 });
             }
 
+            ctrl.editRoster = function (Players) {
+                console.log(Players);
+                $state.go('roster',{'Players':Players});
+            }
+
 
         })
         .controller('ListarEquiposController', function ($http,$state, API, NgTableParams) {
@@ -270,6 +299,56 @@
             ctrl.newTeam = function(id) {
                 $state.go('teamNew');
             }
+
+        })
+        .controller('ListarRosterController', function ($http,$state, API, NgTableParams,$stateParams) {
+
+            var ctrl = this;
+
+            ctrl.roster = $stateParams.Players;
+            console.log(ctrl.roster);
+
+            ctrl.tableParams = new NgTableParams({}, { "dataset" : ctrl.roster });
+
+            ctrl.newPlayer = function() {
+                $state.go('playerNew');
+            }
+
+            ctrl.editPlayer = function (Player) {
+                console.log(Player);
+                $state.go('player',{'Player':Player});
+            }
+
+        })
+        .controller('EditorPlayerController', function ($stateParams,$http, $state, API) {
+
+            var ctrl = this;
+
+            ctrl.player = $stateParams.Player;
+
+            ctrl.save = function () {
+
+                var method = 'POST',
+                    url = API.base + '/player';
+
+                //si existe el partido, lo actulizamos
+                if($stateParams.Player){
+                    method = 'PUT';
+                    url = API.base + '/player/'+ ctrl.player.id;
+                }
+
+                $http({
+                    method: method,
+                    url: url,
+                    data : ctrl.player
+                }).then(function successCallback(response) {
+                    $state.go('teams');
+                    ctrl.player = response.data;
+                }, function errorCallback(response) {
+                    console.log("error" + response);
+                });
+            }
+
 
         });
 
