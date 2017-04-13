@@ -66,24 +66,54 @@
                 })
                 .state({
                     'name' : 'roster',
-                    'url' : '/roster/:{Players:json}',
+                    'url' : '/roster/:{Players:json}/:teamId',
                     'templateUrl' : 'partials/roster.html',
                     'resolve': {
                         'validate': isLogedIn
                     }
                 })
                 .state({
+                    'name' : 'socials',
+                    'url' : '/socials/:id',
+                    'templateUrl' : 'partials/socials.html',
+                    'resolve': {
+                        'validate': isLogedIn
+                    }
+                })
+                .state({
                     'name' : 'player',
-                    'url' : '/player/:{Player:json}',
+                    'url' : '/player',
                     'templateUrl' : 'partials/player.html',
+                    'params': {
+                        Player: null
+                    },
                     'resolve': {
                         'validate': isLogedIn
                     }
                 })
                 .state({
                     'name' : 'playerNew',
-                    'url' : '/player',
+                    'url' : '/player/:TeamId',
                     'templateUrl' : 'partials/player.html',
+                    'resolve': {
+                        'validate': isLogedIn
+                    }
+                })
+                .state({
+                    'name' : 'redsocial',
+                    'url' : '/social',
+                    'templateUrl' : 'partials/social.html',
+                    'params': {
+                        social: null
+                    },
+                    'resolve': {
+                        'validate': isLogedIn
+                    }
+                })
+                .state({
+                    'name' : 'newredsocial',
+                    'url' : '/social/:TeamId',
+                    'templateUrl' : 'partials/social.html',
                     'resolve': {
                         'validate': isLogedIn
                     }
@@ -217,9 +247,6 @@
                 });
             }
 
-
-
-
         })
         .controller('EditorEquiposController', function ($stateParams,$http, $state, API) {
 
@@ -269,11 +296,14 @@
                 });
             }
 
-            ctrl.editRoster = function (Players) {
-                console.log(Players);
-                $state.go('roster',{'Players':Players});
-            }
+            ctrl.editRoster = function (Players,teamId) {
+                $state.go('roster',{'Players':Players,
+                                    'teamId':teamId});
+            };
 
+            ctrl.editSocials = function (id) {
+                $state.go('socials',{'id':id});
+            };
 
         })
         .controller('ListarEquiposController', function ($http,$state, API, NgTableParams) {
@@ -296,9 +326,10 @@
                 $state.go('team',{'id':id});
             }
 
-            ctrl.newTeam = function(id) {
+            ctrl.newTeam = function() {
                 $state.go('teamNew');
             }
+
 
         })
         .controller('ListarRosterController', function ($http,$state, API, NgTableParams,$stateParams) {
@@ -306,17 +337,66 @@
             var ctrl = this;
 
             ctrl.roster = $stateParams.Players;
-            console.log(ctrl.roster);
+
+            ctrl.teamId = $stateParams.teamId;
 
             ctrl.tableParams = new NgTableParams({}, { "dataset" : ctrl.roster });
 
-            ctrl.newPlayer = function() {
-                $state.go('playerNew');
+            ctrl.newPlayer = function(teamId) {
+                $state.go('playerNew',{'TeamId':teamId});
             }
 
             ctrl.editPlayer = function (Player) {
-                console.log(Player);
                 $state.go('player',{'Player':Player});
+            }
+
+            ctrl.deletePlayer = function (player) {
+                $http({
+                    method: 'DELETE',
+                    url: API.base + '/player/'+player.id
+                }).then(function successCallback(response) {
+                    $state.go('team',{'id': ctrl.teamId});
+                }, function errorCallback(response) {
+                    console.log("error borrar jugador")
+                });
+            }
+
+        })
+        .controller('ListarSocialsController', function ($http,$state, API, NgTableParams,$stateParams) {
+
+            var ctrl = this;
+
+            if($stateParams.id){
+                $http({
+                    method: 'GET',
+                    url: API.base + '/team/'+$stateParams.id
+                }).then(function successCallback(response) {
+                    ctrl.team = response.data;
+                    ctrl.tableParams = new NgTableParams({}, { "dataset" : ctrl.team.Socials });
+                    ctrl.teamId = ctrl.team.id;
+
+                }, function errorCallback(response) {
+                    console.log("error redes sociales")
+                });
+            }
+
+            ctrl.newSocial = function(TeamId) {
+                $state.go('newredsocial',{'TeamId':TeamId});
+            }
+
+            ctrl.editSocial = function (Social) {
+                $state.go('redsocial',{'social':Social});
+            }
+
+            ctrl.deleteSocial = function (social) {
+                $http({
+                    method: 'DELETE',
+                    url: API.base + '/social/'+social.id
+                }).then(function successCallback(response) {
+                    $state.go('team',{'id': ctrl.teamId});
+                }, function errorCallback(response) {
+                    console.log("error redes sociales")
+                });
             }
 
         })
@@ -325,6 +405,8 @@
             var ctrl = this;
 
             ctrl.player = $stateParams.Player;
+
+            ctrl.teamId = $stateParams.TeamId;
 
             ctrl.save = function () {
 
@@ -335,6 +417,9 @@
                 if($stateParams.Player){
                     method = 'PUT';
                     url = API.base + '/player/'+ ctrl.player.id;
+
+                }else {
+                    ctrl.player.TeamId = ctrl.teamId;
                 }
 
                 $http({
@@ -342,7 +427,7 @@
                     url: url,
                     data : ctrl.player
                 }).then(function successCallback(response) {
-                    $state.go('teams');
+                    $state.go('team',{'id': ctrl.player.TeamId});
                     ctrl.player = response.data;
                 }, function errorCallback(response) {
                     console.log("error" + response);
@@ -350,7 +435,41 @@
             }
 
 
-        });
+        })
+        .controller('EditorSocialController', function ($stateParams,$http, $state, API) {
+
+        var ctrl = this;
+
+        ctrl.social = $stateParams.social;
+        ctrl.teamId = $stateParams.TeamId;
+
+        ctrl.save = function () {
+
+            var method = 'POST',
+                url = API.base + '/social';
+
+            //si existe el partido, lo actulizamos
+            if($stateParams.social){
+                method = 'PUT';
+                url = API.base + '/social/'+ ctrl.social.id;
+            }else{
+                ctrl.social.TeamId = ctrl.teamId;
+            }
+
+            $http({
+                method: method,
+                url: url,
+                data : ctrl.social
+            }).then(function successCallback(response) {
+                $state.go('team',{'id': ctrl.social.TeamId});
+                ctrl.social = response.data;
+            }, function errorCallback(response) {
+                console.log("error" + response.data);
+            });
+        }
+
+
+    });
 
 
     

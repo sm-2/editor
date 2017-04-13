@@ -1,0 +1,27 @@
+<div ng-controller="EditorSocialController as editor">
+    <h1>Red Social</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <form>
+
+                <label for="nombreRed"> Single select: </label><br>
+                <select id="nombreRed" name="nombreRed" class="form-control" ng-model="editor.social.name">
+                    <option value="twitter">Twitter</option>
+                    <option value="twitch">Twitch</option>
+                    <option value="facebook">Facebook</option>
+                    <option value="instagram">Instagram</option>
+                    <option value="youtube">Youtube</option>
+                </select><br>
+
+                <div class="form-group">
+                    <label for="nickJugador">URL:</label>
+                    <input type="text" class="form-control" id="nickJugador" ng-model="editor.social.url">
+                </div>
+
+                <a ng-click="editor.save()" class="btn btn-primary">Guardar</a>
+            </form>
+        </div>
+    </div>
+
+</div>
