@@ -252,6 +252,8 @@
 
             var ctrl = this;
 
+            ctrl.crearEditar = $stateParams.id;
+
             $http({
                 method: 'GET',
                 url: API.base + '/competitionGame'
