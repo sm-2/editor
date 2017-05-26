@@ -477,6 +477,13 @@
         }
 
 
+    })
+    .filter('adaptCompetition', function() {
+        return function(input, liga) {
+
+            var out = liga + '#'+input;
+            return out;
+        };
     });
 
 

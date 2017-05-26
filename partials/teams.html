@@ -19,7 +19,7 @@
                 </td>
 
                 <td title="'Competicion'" filter="{ 'CompetitionGameId': 'select'}" filter-data="editor.competitions">
-                    {{team.CompetitionGameId}}
+                    {{team.CompetitionGameId | adaptCompetition:'SHL'}}
                 </td>
 
                 <td title="'Editar'" class="text-center">

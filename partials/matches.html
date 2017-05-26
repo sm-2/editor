@@ -21,7 +21,7 @@
                 </td>
                 <td title="'Competicion'" filter="{ 'CompetitionGameId': 'select'}" filter-data="editor.competitions"
                     class="text-center" style="width: 10%">
-                    {{match.CompetitionGameId}}
+                    {{match.CompetitionGameId | adaptCompetition:'SHL'}}
                 </td>
                 <td title="'Temporada'" filter="{ season: 'text'}" sortable="'season'" class="text-center">
                     {{ match.season }}
