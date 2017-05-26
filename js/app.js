@@ -170,6 +170,8 @@
 
             ctrl.matches = [];
 
+            ctrl.competitions = [{id: "1", title: "SHL#1"}, {id: '2', title: 'SHL#2'}];
+
             $http({
                 method: 'GET',
                 url: API.base + '/match'
@@ -308,11 +310,15 @@
             };
 
         })
-        .controller('ListarEquiposController', function ($http,$state, API, NgTableParams) {
+        .controller('ListarEquiposController', function ($http,$state, API, NgTableParams,$filter, $q,$scope) {
 
             var ctrl = this;
 
             ctrl.teams = [];
+
+
+            ctrl.competitions = [{id: "1", title: "SHL#1"}, {id: '2', title: 'SHL#2'}];
+
 
             $http({
                 method: 'GET',

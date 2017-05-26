@@ -19,6 +19,13 @@
                 <td title="'Jornada'" filter="{ round: 'text'}" sortable="'round'" class="text-center">
                     {{ match.round }}
                 </td>
+                <td title="'Competicion'" filter="{ 'CompetitionGameId': 'select'}" filter-data="editor.competitions"
+                    class="text-center" style="width: 10%">
+                    {{match.CompetitionGameId}}
+                </td>
+                <td title="'Temporada'" filter="{ season: 'text'}" sortable="'season'" class="text-center">
+                    {{ match.season }}
+                </td>
                 <!-- Sergio 8/04  -->
                 <td title="'Terminado'" class="text-center">
                     <input type="checkbox" ng-disabled="true" ng-model=" match.finished">
