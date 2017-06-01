@@ -33,8 +33,9 @@
                     <label>Fecha y hora:</label>
                     <div class="dropdown">
                         <a class="dropdown-toggle" id="dropdown" role="button" data-toggle="dropdown" href="javascript:void(0);">
-                            <div class="input-group"><input type="text" class="form-control"
-                                                            data-ng-model="editor.match.start_date">
+                            <div class="input-group">
+                                <input type="text" class="form-control" data-ng-model="editor.match.start_date" id="dateMatch" ng-hide="true">
+                                <input type="text" class="form-control" value="{{editor.match.start_date | date : 'dd/MM/yyyy HH:mm'}}">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                             </div>
                         </a>
