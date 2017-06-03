@@ -7,7 +7,7 @@
         if(!token) throw new Error('401');
     }
 
-    angular.module('esportscalendar', ['ui.bootstrap.datetimepicker', 'ui.router', 'LocalStorageModule', 'ngTable'])
+    angular.module('esportscalendar', ['ui.bootstrap.datetimepicker', 'ui.router', 'LocalStorageModule', 'ngTable','angularFileUpload'])
         .constant('API', {'base' : 'https://api-esports.herokuapp.com'}) //
         //.constant('API', {'base' : 'http://localhost:8080'}) //
         .config(['$compileProvider', '$stateProvider', '$urlRouterProvider', 'localStorageServiceProvider',
@@ -250,11 +250,12 @@
             }
 
         })
-        .controller('EditorEquiposController', function ($stateParams,$http, $state, API) {
+        .controller('EditorEquiposController', function ($stateParams,$http, $state, API,FileUploader) {
 
             var ctrl = this;
 
             ctrl.crearEditar = $stateParams.id;
+
 
             $http({
                 method: 'GET',
@@ -317,7 +318,7 @@
             ctrl.teams = [];
 
 
-            ctrl.competitions = [{id: "1", title: "SHL#1"}, {id: '2', title: 'SHL#2'}];
+            ctrl.competitions = [{id: "1", title: "SHL#1"}, {id: '2', title: 'SHL#2'},{id: '3', title: 'TheFirst'}];
 
 
             $http({
@@ -481,7 +482,12 @@
     .filter('adaptCompetition', function() {
         return function(input, liga) {
 
-            var out = liga + '#'+input;
+            var array = ['SHL,TheFirst']
+            var out;
+            if(input == 1 || input ==2)
+               out = 'SHL#'+input;
+            if(input == 3)
+                out = 'TheFirst';
             return out;
         };
     });

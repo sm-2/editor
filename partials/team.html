@@ -23,6 +23,11 @@
                     <textarea class="form-control" id="descripcionEquipo" ng-model="editor.team.description" style="height:100px;"/>
                 </div>
 
+                <div class="form-group">
+                    <label for="logoEquipo">URL Logo Equipo:</label>
+                    <input type="text" class="form-control" id="logoEquipo" ng-model="editor.team.logo"/><br/>
+                </div>
+
                 <div class="form-group" ng-show="editor.crearEditar">
                     <label for="roster">Roster del equipo:</label>
                     <a ng-click="editor.editRoster(editor.team.Players,editor.team.id)" class="btn btn-default" id="roster">
