@@ -6,7 +6,6 @@
             <div class="form-group">
                 <label>Competición:</label>
                 <select class="form-control" ng-model="editor.team.CompetitionGameId">
-                    <option value="">Sin competición</option>
                     <option ng-repeat="competitionGame in editor.competitionsGames" value="{{competitionGame.id}}">{{competitionGame.Competition.name}}</option>
                 </select>
             </div>
