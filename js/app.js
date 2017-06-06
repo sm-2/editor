@@ -122,7 +122,16 @@
                     'name' : 'login',
                     'url' : '/login',
                     'templateUrl' : 'partials/login.html'
-                });
+                })
+	            .state({
+		            'name' : 'logout',
+		            'url' : '/logout',
+		            'resolve': {
+			            'validate': function () {
+
+			            }
+		            }
+	            });
 
             $urlRouterProvider.otherwise('/matches');
 
@@ -161,7 +170,12 @@
                             ctrl.msg = error.data.error;
                         });
 
-            }
+            };
+
+            ctrl.logout = function () {
+	            localStorageService.remove('token');
+	            $state.go('login');
+            };
 
         })
         .controller('ListarPartidosController', function ($http,$state, API, NgTableParams) {

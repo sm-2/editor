@@ -48,6 +48,9 @@
                 <li><a ui-sref="matches">Partidos</a></li>
                 <li><a ui-sref="teams">Equipos</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right" ng-controller="LoginController as login">
+                <li><a ng-click="login.logout()">Cerrar sesión</a></li>
+            </ul>
         </div><!-- /.navbar-collapse -->
     </div>
 </nav>
